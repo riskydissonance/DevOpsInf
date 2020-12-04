@@ -6,10 +6,14 @@ Docker compose file to host:
 * Jenkins
 * Sonar
 * Artifactory
+* Nginx reverse proxy for all the above.
 * Postgres for DB
 
-Volumes on WSL are mounted at: `/mnt/wsl/docker-desktop-mount-points`
+Just running `docker compose --build up` should start all the above infrastructure and allow them to communicate.
 
+Config-as-code is a WIP, but examples are provided.
+
+Volumes on WSL are mounted at: `/mnt/wsl/docker-desktop-mount-points`
 ### Nginx
 
 ##### Setting up a Self-signed cert
@@ -48,3 +52,4 @@ E.g. For local access, in `/etc/hosts`:
 * Fix local dev hacks from having no cert/dns
     - internal & external IP resolving for local dev (hacked in compose with extra_hosts)
     - Jenkins docker image has ssl verify off
+* Add config-as-code for all services where possible
