@@ -1,2 +1,5 @@
 nginx/cert
 gitlab/config
+projects/
+jenkins/agent
+jenkins/config

@@ -1,0 +1,55 @@
+pipeline {
+
+    agent {
+        label 'Windows'
+    }
+
+    stages {
+
+        stage('gitlab notify start')
+        {
+            steps {
+                updateGitlabCommitStatus name: 'build', state: 'pending'
+            }
+        }
+
+        stage('build') {
+            steps {
+                bat "\"${tool 'MSBuild'}\" Seatbelt.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
+            }
+        }
+
+        stage('deploy') {
+
+            steps{
+
+                script {
+                    def server = Artifactory.server "ARTIFACTORY"
+
+                    def uploadSpec =
+                                '''{
+                                "files": [
+                                    {
+                                        "pattern": "Seatbelt/bin/Release/**",
+                                        "target": "engagements/ProjectSaturn/Seatbelt/"
+                                    }
+                                ]
+                            }'''
+
+                    def buildInfo = server.upload spec: uploadSpec
+
+                    server.publishBuildInfo buildInfo
+                }
+            }
+
+        }
+
+        stage('gitlab notify success')
+        {
+            steps {
+                updateGitlabCommitStatus name: 'build', state: 'success'
+            }
+        }
+    }
+
+}
