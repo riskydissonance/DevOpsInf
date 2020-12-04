@@ -9,7 +9,7 @@ Docker compose file to host:
 * Nginx reverse proxy for all the above.
 * Postgres for DB
 
-Just running `docker compose --build up` should start all the above infrastructure and allow them to communicate.
+Just running `docker-compose --build up` should start all the above infrastructure and allow them to communicate.
 
 
 Volumes on WSL are mounted at: `/mnt/wsl/docker-desktop-mount-points`
