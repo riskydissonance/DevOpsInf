@@ -40,6 +40,10 @@ E.g. For local access, in `/etc/hosts`:
 127.0.0.1 jenkins.jmpesp.local
 127.0.0.1 artifactory.jmpesp.local
 127.0.0.1 sonar.jmpesp.local
+127.0.0.1 gitlab
+127.0.0.1 jenkins
+127.0.0.1 artifactory
+127.0.0.1 sonar
 ```
 
 ### Jenkins
