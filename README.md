@@ -38,6 +38,10 @@ E.g. For local access, in `/etc/hosts`:
 127.0.0.1 sonar.jmpesp.local
 ```
 
+### Jenkins
+
+* Example (redacted) config-as-code in jenkins/config
+* Example Jenkinsfile that would be committed to Seatbelt repository in gitlab/examples/Seatbelt/Jenkinsfile
 
 ## TODO
 
