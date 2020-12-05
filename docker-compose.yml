@@ -4,17 +4,17 @@ services:
 
   nginx:
     image: 'nginx:latest'
+    restart: always
     ports:
       - '80:80'
       - '443:443'
     volumes:
       - './nginx/config:/etc/nginx'
       - './nginx/cert:/etc/cert:ro'
-    restart: always
 
   gitlab:
     image: "gitlab/gitlab-ce:latest"
-    restart: "always"
+    restart: always
     ports:
       - '22:22'
       - "8888:80"
@@ -31,19 +31,18 @@ services:
 
   jenkins:
     build: ./jenkins
-    restart: "always"
+    restart: always
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-certs:/certs/client:ro
-      - ./jenkins/config:/etc/jenkins/config
-    #environment:
-      #CASC_JENKINS_CONFIG: /etc/jenkins/config/jenkins.yml
+    environment:
+      CASC_JENKINS_CONFIG: https://raw.githubusercontent.com/m0rv4i/DevOpsInf/master/jenkins/config/jenkins.yml
 
   artifactory:
-    image: docker.bintray.io/jfrog/artifactory-oss:latest
+    build: ./artifactory
     restart: always
     ports:
       - "8081:8081"
@@ -53,7 +52,7 @@ services:
 
   sonar:
     image: sonarqube:latest
-    restart: "always"
+    restart: always
     depends_on:
       - db
     environment:
