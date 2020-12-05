@@ -22,9 +22,9 @@ Volumes on WSL are mounted at: `/mnt/wsl/docker-desktop-mount-points`
 
 ## Config-as-code
 
-* Config-as-code is a WIP, but some examples are provided.
-* Example config-as-code in jenkins/config
+* Config-as-code is a WIP
 * Example Jenkinsfiles for repos that would be committed to each repo are in gitlab/examples
+* Artifactory: https://www.jfrog.com/confluence/display/JFROG/Artifactory+Configuration+Descriptors
 
 ## Setup
 
@@ -51,6 +51,7 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./nginx/cert/ce
 https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04#:~:text=%20How%20To%20Create%20a%20Self-Signed%20SSL%20Certificate,made%20our%20changes%20and%20adjusted%20our...%20More%20
 
 * Jenkins Dockerfile is set to turn of SSL verify for git
+* Sonar scanner doesn't have the ability to accept the self signed cert so sonar is also exposed over http in nginx for the scanner - this wouldn't be necessary with a legitimate certificate.
 
 #### DNS
 

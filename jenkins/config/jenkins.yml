@@ -1,0 +1,229 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          description: "Deploy creds"
+          id: "Artifactory"
+          password: "{AQAAABAAAAAgVEIEvDfCpyV9IXSIYoUsuIsxvE+33cCLm2KqcTDpaT08Q59t4w/dTHviGG6CVdX3}"
+          scope: GLOBAL
+          username: "admin"
+      - gitLabApiTokenImpl:
+          apiToken: "{AQAAABAAAAAgjf6tQQDsHtDI7rJyPiG8w6Bu0Roo04L6hj/UEYnsa0fnXPrkK7r1lewyz9EKUvGE}"
+          id: "GitLab"
+          scope: GLOBAL
+      - gitLabApiTokenImpl:
+          apiToken: "{AQAAABAAAAAgbHF5oWqqnNce7Qw6YtbNCbYI0o7MpV7/Hcb8JComwr90uFMB+kE/MXCG7m89cPtc}"
+          id: "Gitlab2"
+          scope: GLOBAL
+      - usernamePassword:
+          id: "Gitlab creds"
+          password: "{AQAAABAAAAAg40eufdTGVlVUp1wRR8cZxXQDXlSuKIfpqNVa7HpWZkRMa3T1uuiR/FlakUyg5tG2}"
+          scope: GLOBAL
+          username: "root"
+      - string:
+          id: "Sonar"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAwCAU53XC4f2iAxaB4/qHPzONKFxGnjUwJKQ/VJLh51w0LMrXuHzgs4Tzvq6xw1ZUeKsY6a+q4Xas1qlS74rlptw==}"
+      - string:
+          id: "GitHubWebhook"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAg3cwVAl4UTC1g79wL68xvIlcUi9RwgP2S3UIN4Wb8fb51VatmnHRN1kkPIco9AF41}"
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  labelAtoms:
+  - name: "Windows"
+  - name: "WindowsHost"
+  - name: "master"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  noUsageStatistics: true
+  nodes:
+  - permanent:
+      labelString: "Windows"
+      launcher:
+        jnlp:
+          workDirSettings:
+            disabled: false
+            failIfWorkDirIsMissing: false
+            internalDir: "remoting"
+      mode: EXCLUSIVE
+      name: "WindowsHost"
+      remoteFS: "C:\\cicd\\jenkins\\agent"
+      retentionStrategy: "always"
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "admin"
+        name: "admin"
+        properties:
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "admin@jmpesp.local"
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  envInject:
+    enableLoadingFromMaster: false
+    enablePermissions: false
+    hideInjectedVars: false
+  sSHD:
+    port: -1
+unclassified:
+  artifactoryBuilder:
+    artifactoryServers:
+    - artifactoryUrl: "http://artifactory:8081/artifactory"
+      bypassProxy: false
+      connectionRetry: 3
+      deployerCredentialsConfig:
+        credentialsId: "Artifactory"
+        overridingCredentials: false
+        password: "{AQAAABAAAAAQWbChteCNBTLlaDN+azPQ861DDhHwUjy730OjhoL9NvE=}"
+        username: "****"
+      deploymentThreads: 3
+      serverId: "ARTIFACTORY"
+      timeout: 300
+    jfrogPipelinesServer:
+      bypassProxy: false
+      connectionRetries: 3
+      credentialsConfig:
+        ignoreCredentialPluginDisabled: true
+        overridingCredentials: false
+        password: "{AQAAABAAAAAQeh8NcaYi+JsLPyohxSkQbr5e+dXhr/xDYYZD0jSxDTs=}"
+        username: "****"
+      timeout: 300
+    useCredentialsPlugin: true
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketCloudEndpoint:
+        enableCache: false
+        manageHooks: false
+        repositoriesCacheDuration: 0
+        teamCacheDuration: 0
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  buildStepOperation:
+    enabled: false
+  email-ext:
+    adminRequiredForTemplateTesting: false
+    allowUnregisteredEnabled: false
+    charset: "UTF-8"
+    debugMode: false
+    defaultBody: |-
+      $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+      Check console output at $BUILD_URL to view the results.
+    defaultContentType: "text/plain"
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    defaultTriggerIds:
+    - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+    mailAccount:
+      smtpPassword: "{AQAAABAAAAAQofdzxLdMh+jLPyNkgVTSse2a2TFk/6eQjvdBBNOKHag=}"
+    maxAttachmentSize: -1
+    maxAttachmentSizeMb: -1
+    precedenceBulk: false
+    watchingEnabled: false
+  fingerprints:
+    fingerprintCleanupDisabled: false
+    storage: "file"
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleForNormalize
+  gitHubPluginConfig:
+    hookUrl: "https://jenkins.jmpesp.local/github-webhook/"
+  gitLabConnectionConfig:
+    connections:
+    - apiTokenId: "GitLab"
+      clientBuilderId: "autodetect"
+      connectionTimeout: 10
+      ignoreCertificateErrors: true
+      name: "Gitlab"
+      readTimeout: 10
+      url: "https://gitlab.jmpesp.local"
+  gitSCM:
+    allowSecondFetch: false
+    createAccountBasedOnEmail: false
+    disableGitToolChooser: false
+    hideCredentials: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  ivyBuildTrigger:
+    extendedVersionMatching: false
+  junitTestResultStorage:
+    storage: "file"
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "https://jenkins.jmpesp.local/"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+    useTls: false
+  mavenModuleSet:
+    localRepository: "default"
+  pollSCM:
+    pollingThreadCount: 10
+  sonarGlobalConfiguration:
+    buildWrapperEnabled: true
+    installations:
+    - credentialsId: "Sonar"
+      name: "Sonarqube"
+      serverUrl: "http://sonar.jmpesp.local"
+      triggers:
+        skipScmCause: false
+        skipUpstreamCause: false
+  timestamper:
+    allPipelines: false
+    elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+    systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  mavenGlobalConfig:
+    globalSettingsProvider: "standard"
+    settingsProvider: "standard"
+  msbuild:
+    installations:
+    - home: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\\
+        Current\\Bin\\MSBuild.exe"
+      name: "MSBuild"
