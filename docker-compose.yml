@@ -10,11 +10,6 @@ services:
     volumes:
       - './nginx/config:/etc/nginx'
       - './nginx/cert:/etc/cert:ro'
-    extra_hosts:
-      gitlab.jmpesp.local: 172.27.48.1
-      jenkins.jmpesp.local: 172.27.48.1
-      sonar.jmpesp.local: 172.27.48.1
-      artifactory.jmpesp.local: 172.27.48.1
     restart: always
 
   gitlab:
@@ -33,11 +28,6 @@ services:
         letsencrypt['enabled'] = false
         nginx['enable'] = true
         nginx['redirect_http_to_https'] = false
-    extra_hosts:
-      gitlab.jmpesp.local: 172.27.48.1
-      jenkins.jmpesp.local: 172.27.48.1
-      sonar.jmpesp.local: 172.27.48.1
-      artifactory.jmpesp.local: 172.27.48.1
 
   jenkins:
     build: ./jenkins
@@ -49,13 +39,8 @@ services:
       - jenkins-data:/var/jenkins_home
       - jenkins-certs:/certs/client:ro
       - ./jenkins/config:/etc/jenkins/config
-    environment:
-      CASC_JENKINS_CONFIG: /etc/jenkins/config/jenkins.yml
-    extra_hosts:
-      gitlab.jmpesp.local: 172.27.48.1
-      jenkins.jmpesp.local: 172.27.48.1
-      sonar.jmpesp.local: 172.27.48.1
-      artifactory.jmpesp.local: 172.27.48.1
+    #environment:
+      #CASC_JENKINS_CONFIG: /etc/jenkins/config/jenkins.yml
 
   artifactory:
     image: docker.bintray.io/jfrog/artifactory-oss:latest
@@ -65,13 +50,8 @@ services:
       - "8082:8082"
     volumes:
       - artifactory-data:/var/opt/jfrog/artifactory
-    extra_hosts:
-      gitlab.jmpesp.local: 172.27.48.1
-      jenkins.jmpesp.local: 172.27.48.1
-      sonar.jmpesp.local: 172.27.48.1
-      artifactory.jmpesp.local: 172.27.48.1
 
-  sonarqube:
+  sonar:
     image: sonarqube:latest
     restart: "always"
     depends_on:
@@ -91,11 +71,6 @@ services:
       nofile:
           soft: 262144
           hard: 262144
-    extra_hosts:
-      gitlab.jmpesp.local: 172.27.48.1
-      jenkins.jmpesp.local: 172.27.48.1
-      sonar.jmpesp.local: 172.27.48.1
-      artifactory.jmpesp.local: 172.27.48.1
 
   db:
     image: postgres:latest
@@ -105,11 +80,6 @@ services:
     volumes:
       - postgresql:/var/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
-    extra_hosts:
-      gitlab.jmpesp.local: 172.27.48.1
-      jenkins.jmpesp.local: 172.27.48.1
-      sonar.jmpesp.local: 172.27.48.1
-      artifactory.jmpesp.local: 172.27.48.1
 
 volumes:
 

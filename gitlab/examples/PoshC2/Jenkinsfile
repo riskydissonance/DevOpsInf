@@ -23,13 +23,21 @@ pipeline {
 
     stages {
 
-        stage('build-and-analyse') {
+        stage('build') {
+            steps {
+                echo "No build step for ${JOB_NAME}"
+            }
+        }
+        stage('test') {
+            steps {
+                bat "python -m pytest"
+            }
+        }
 
+        stage('sonar') {
             steps {
                 withSonarQubeEnv('Sonarqube') {
-                    bat "C:\\tools\\sonar-scanner-msbuild-5.0.4.24009-net46\\SonarScanner.MSBuild.exe begin -k:\"${JOB_NAME}\" -d:sonar.host.url=${env.SONAR_HOST_URL}"
-                    bat "\"${tool 'MSBuild'}\" ${JOB_NAME}.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
-                    bat "C:\\tools\\sonar-scanner-msbuild-5.0.4.24009-net46\\SonarScanner.MSBuild.exe end"
+                    bat "docker run --rm -e SONAR_HOST_URL=\"${env.SONAR_HOST_URL}\" -v \"%cd%:/usr/src\" sonarsource/sonar-scanner-cli:latest -Dsonar.projectKey=${JOB_NAME}"
                 }
             }
         }
@@ -39,6 +47,9 @@ pipeline {
             steps{
 
                 script {
+
+                    zip zipFile: '${JOB_NAME}.zip'
+
                     def server = Artifactory.server "ARTIFACTORY"
 
                     String rtProject = ""
@@ -53,7 +64,7 @@ pipeline {
                         '''{
                                 "files": [
                                     {
-                                        "pattern": "${JOB_NAME}/bin/Release/*.exe",
+                                        "pattern": "${JOB_NAME}.zip",
                                         "target": "engagements/''' + rtProject + '''/${JOB_NAME}/"
                                     }
                                 ]
