@@ -40,6 +40,8 @@ services:
       - jenkins-certs:/certs/client:ro
     environment:
       CASC_JENKINS_CONFIG: https://raw.githubusercontent.com/m0rv4i/DevOpsInf/master/jenkins/config/jenkins.yml
+      SLACK_TOKEN: ${SLACK_TOKEN} # Taken from .env file in local repo that is .gitignored
+      SLACK_DOMAIN: ${SLACK_DOMAIN} # Taken from .env file in local repo that is .gitignored
 
   artifactory:
     build: ./artifactory

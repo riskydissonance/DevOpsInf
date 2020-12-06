@@ -1,3 +1,4 @@
 nginx/cert
 gitlab/config
 projects/
+.env
