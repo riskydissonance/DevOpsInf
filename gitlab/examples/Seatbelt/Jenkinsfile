@@ -50,9 +50,35 @@ pipeline {
             }
         }
 
-        stage('build-and-analyse') {
+        stage('prep') {
+            steps {
+                replaceAll("*.cs", "Mimikatz", "PROJECT")
+
+                script {
+                    replaceSymbols()
+                }
+            }
+        }
+
+        stage('build') {
             steps {
                 runMsbuild()
+            }
+        }
+
+        stage('obfuscation') {
+            steps {
+                script {
+                    obfuscateDotnetBinary("${JOB_NAME}/bin/Release/${JOB_NAME}.exe")
+                }
+            }
+        }
+
+        stage('opsec tests') {
+            steps {
+                script {
+                    testOpsec("${JOB_NAME}/bin/Release/${JOB_NAME}.exe")
+                }
             }
         }
 
