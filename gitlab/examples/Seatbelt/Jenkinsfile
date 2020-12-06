@@ -24,6 +24,9 @@ pipeline {
             updateGitlabCommitStatus name: 'build', state: 'failed'
             slackNotifyPipelineFailed()
         }
+        cleanup {
+            cleanup()
+        }
     }
 
     options {
@@ -94,14 +97,6 @@ pipeline {
             }
         }
 
-        stage('cleanup') {
-            steps {
-                cleanup()
-            }
-        }
-
     }
-
-
 
 }

@@ -21,6 +21,9 @@ pipeline {
             updateGitlabCommitStatus name: 'build', state: 'failed'
             slackNotifyPipelineFailed()
         }
+        cleanup {
+            cleanup()
+        }
     }
 
     options {
@@ -65,12 +68,6 @@ pipeline {
 
                     deployToRtArtifactory(uploadPattern, targetRepo)
                 }
-            }
-        }
-
-        stage('cleanup') {
-            steps {
-                cleanup()
             }
         }
 
