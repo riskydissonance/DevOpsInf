@@ -34,6 +34,7 @@ Before anyone tries anything these are all unique to this particular infrastruct
     * TODO for Gitlab
 
 * Example `Jenkinsfile`s for repos are in `gitlab/examples`.
+* See https://github.com/m0rv4i/RT-Jenkins-Piplines-Common for the Jenkins shared library.
 
 ## Setup
 

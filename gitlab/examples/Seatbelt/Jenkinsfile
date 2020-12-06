@@ -1,3 +1,8 @@
+library identifier: 'rt-ci-common@master', retriever: modernSCM(
+  [$class: 'GitSCMSource',
+   remote: 'https://github.com/m0rv4i/RT-Jenkins-Piplines-Common.git']
+)
+
 pipeline {
 
     agent {
@@ -18,7 +23,7 @@ pipeline {
     }
 
     triggers {
-        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All')
+        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: "fdcb93bd3b1c05c33b0ca196850d784c") // TODO don't store here
     }
 
     stages {
@@ -26,11 +31,7 @@ pipeline {
         stage('build-and-analyse') {
 
             steps {
-                withSonarQubeEnv('Sonarqube') {
-                    bat "C:\\tools\\sonar-scanner-msbuild-5.0.4.24009-net46\\SonarScanner.MSBuild.exe begin -k:\"${JOB_NAME}\" -d:sonar.host.url=${env.SONAR_HOST_URL}"
-                    bat "\"${tool 'MSBuild'}\" ${JOB_NAME}.sln /p:Configuration=Release /p:Platform=\"Any CPU\""
-                    bat "C:\\tools\\sonar-scanner-msbuild-5.0.4.24009-net46\\SonarScanner.MSBuild.exe end"
-                }
+                msbuildWithSonar()
             }
         }
 
