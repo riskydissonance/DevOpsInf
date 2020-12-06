@@ -1,7 +1,13 @@
-library identifier: 'rt-ci-common@master', retriever: modernSCM(
-  [$class: 'GitSCMSource',
-   remote: 'https://github.com/m0rv4i/RT-Jenkins-Piplines-Common.git']
-)
+library identifier: 'rt-ci-common@master',
+    retriever: modernSCM(
+        [
+            $class: 'GitSCMSource',
+            remote: 'https://github.com/m0rv4i/RT-Jenkins-Piplines-Common.git'
+        ]
+    )
+
+def gitURL = "https://github.com/GhostPack/Seatbelt"
+def commitHash = "debc7e15d94c706c9104f6a21b844f10a95ee515"; // 8th Nov, 2020
 
 pipeline {
 
@@ -10,15 +16,21 @@ pipeline {
     }
 
     post {
-        failure {
-            updateGitlabCommitStatus name: 'build', state: 'failed'
-        }
         success {
             updateGitlabCommitStatus name: 'build', state: 'success'
+            slackNotifyDeployed()
+        }
+        failure {
+            updateGitlabCommitStatus name: 'build', state: 'failed'
+            slackNotifyPipelineFailed()
         }
     }
 
     options {
+        timestamps()
+
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+
         gitLabConnection('Gitlab')
     }
 
@@ -26,48 +38,44 @@ pipeline {
         gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: "fdcb93bd3b1c05c33b0ca196850d784c") // TODO don't store here
     }
 
+    parameters {
+        string name: 'ProjectID', defaultValue: 'No Project', description: 'ProjectID associated with the build.', trim: true
+    }
+
     stages {
 
-        stage('build-and-analyse') {
-
+        stage('checkout') {
             steps {
-                msbuildWithSonar()
+                cloneExternalRepo(gitURL, commitHash)
+            }
+        }
+
+        stage('build-and-analyse') {
+            steps {
+                runMsbuild()
             }
         }
 
         stage('deploy') {
-
             steps{
+                script{
+                    def uploadPattern = "${JOB_NAME}/bin/Release/*.exe"
+                    def targetRepo = "engagements/${params.ProjectID}/${JOB_NAME}/"
+                    def props = "language=csharp;ext=exe;type=postex;"
 
-                script {
-                    def server = Artifactory.server "ARTIFACTORY"
-
-                    String rtProject = ""
-
-                    if(env.RT_PROJECT){
-                        rtProject = env.RT_PROJECT
-                    } else {
-                        rtProject = "No Project"
-                    }
-
-                    def uploadSpec =
-                        '''{
-                                "files": [
-                                    {
-                                        "pattern": "${JOB_NAME}/bin/Release/*.exe",
-                                        "target": "engagements/''' + rtProject + '''/${JOB_NAME}/"
-                                    }
-                                ]
-                            }'''
-
-                    def buildInfo = server.upload spec: uploadSpec
-
-                    server.publishBuildInfo buildInfo
+                    deployToRtArtifactory(uploadPattern, targetRepo, props)
                 }
             }
+        }
 
+        stage('cleanup') {
+            steps {
+                cleanup()
+            }
         }
 
     }
+
+
 
 }

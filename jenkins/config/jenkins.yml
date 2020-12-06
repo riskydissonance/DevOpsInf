@@ -5,7 +5,7 @@ credentials:
       - usernamePassword:
           description: "Deploy creds"
           id: "Artifactory"
-          password: "{AQAAABAAAAAgVEIEvDfCpyV9IXSIYoUsuIsxvE+33cCLm2KqcTDpaT08Q59t4w/dTHviGG6CVdX3}"
+          password: "{AQAAABAAAAAgtVvEU011dqCh29M5l2O6Cc933RstFKjS3FrwtqvKqIUbWBzQ2UroWb7dbJ3ut15N}"
           scope: GLOBAL
           username: "admin"
       - gitLabApiTokenImpl:
@@ -18,17 +18,13 @@ credentials:
           scope: GLOBAL
       - usernamePassword:
           id: "Gitlab creds"
-          password: "{AQAAABAAAAAg40eufdTGVlVUp1wRR8cZxXQDXlSuKIfpqNVa7HpWZkRMa3T1uuiR/FlakUyg5tG2}"
+          password: "{AQAAABAAAAAgh+aPL5ou8vh/K0ws2jf7/oWnigtwJpNeTUiLr0rNK6TLgV8aQUQhQ4u7sJ5vm+IG}"
           scope: GLOBAL
           username: "root"
       - string:
           id: "Sonar"
           scope: GLOBAL
           secret: "{AQAAABAAAAAwCAU53XC4f2iAxaB4/qHPzONKFxGnjUwJKQ/VJLh51w0LMrXuHzgs4Tzvq6xw1ZUeKsY6a+q4Xas1qlS74rlptw==}"
-      - string:
-          id: "GitHubWebhook"
-          scope: GLOBAL
-          secret: "{AQAAABAAAAAg3cwVAl4UTC1g79wL68xvIlcUi9RwgP2S3UIN4Wb8fb51VatmnHRN1kkPIco9AF41}"
 jenkins:
   agentProtocols:
   - "JNLP4-connect"
@@ -78,6 +74,7 @@ jenkins:
       - id: "admin"
         name: "admin"
         properties:
+        - "slack"
         - "apiToken"
         - favoriting:
             autofavoriteEnabled: true
@@ -107,6 +104,9 @@ security:
     hideInjectedVars: false
   sSHD:
     port: -1
+  scriptApproval:
+    approvedSignatures:
+    - "staticMethod java.lang.System getenv java.lang.String"
 unclassified:
   artifactoryBuilder:
     artifactoryServers:
@@ -116,7 +116,6 @@ unclassified:
       deployerCredentialsConfig:
         credentialsId: "Artifactory"
         overridingCredentials: false
-        password: "{AQAAABAAAAAQWbChteCNBTLlaDN+azPQ861DDhHwUjy730OjhoL9NvE=}"
         username: "****"
       deploymentThreads: 3
       serverId: "ARTIFACTORY"
@@ -127,7 +126,6 @@ unclassified:
       credentialsConfig:
         ignoreCredentialPluginDisabled: true
         overridingCredentials: false
-        password: "{AQAAABAAAAAQeh8NcaYi+JsLPyohxSkQbr5e+dXhr/xDYYZD0jSxDTs=}"
         username: "****"
       timeout: 300
     useCredentialsPlugin: true
@@ -221,6 +219,10 @@ tool:
   mavenGlobalConfig:
     globalSettingsProvider: "standard"
     settingsProvider: "standard"
+  msBuildSQRunnerInstallation:
+    installations:
+    - home: "C:\\tools\\sonar-scanner-msbuild-5.0.4.24009-net46\\"
+      name: "SonarScannerMSBuild"
   msbuild:
     installations:
     - home: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\\

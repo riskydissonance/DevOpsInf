@@ -6,6 +6,7 @@ library identifier: 'rt-ci-common@master',
         ]
     )
 
+
 pipeline {
 
     agent {
@@ -32,7 +33,7 @@ pipeline {
     }
 
     triggers {
-        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: "2dabed56c7a17eb1810afc804e0ec151") // TODO don't store here
+        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: "c5db392d34e4dae4d1a34ccdb9232512") // TODO don't store here
     }
 
     parameters {
@@ -41,27 +42,18 @@ pipeline {
 
     stages {
 
-        stage('test') {
+        stage('build-and-analyse') {
             steps {
-                bat "python -m pytest"
-            }
-        }
-
-        stage('analyse') {
-            steps {
-                sonarOnDocker()
+                runMsbuildWithSonar()
             }
         }
 
         stage('deploy') {
             steps{
-                script {
-
-                    zip zipFile: '${JOB_NAME}.zip'
-
-                    def uploadPattern = "${JOB_NAME}.zip"
+                script{
+                    def uploadPattern = "${JOB_NAME}/bin/Release/*.exe"
                     def targetRepo = "engagements/${params.ProjectID}/${JOB_NAME}/"
-                    def props = "language=python;ext=zip;type=c2;"
+                    def props = "language=csharp;ext=exe;type=postex;"
 
                     deployToRtArtifactory(uploadPattern, targetRepo)
                 }
