@@ -42,7 +42,7 @@ pipeline {
     }
 
     parameters {
-        string name: 'ProjectID', defaultValue: 'No Project', description: 'ProjectID associated with the build.', trim: true
+        string name: 'projectId', defaultValue: 'No Project', description: 'Project ID associated with the build.', trim: true
     }
 
     stages {
@@ -57,9 +57,7 @@ pipeline {
             steps {
                 replaceAll("*.cs", "Mimikatz", "PROJECT")
 
-                script {
-                    replaceSymbols()
-                }
+                replaceSymbols()
             }
         }
 
@@ -71,17 +69,19 @@ pipeline {
 
         stage('obfuscation') {
             steps {
-                script {
-                    obfuscateDotnetBinary("${JOB_NAME}/bin/Release/${JOB_NAME}.exe")
-                }
+                obfuscateDotnetBinary("${JOB_NAME}/bin/Release/${JOB_NAME}.exe")
             }
         }
 
         stage('opsec tests') {
             steps {
-                script {
-                    testOpsec("${JOB_NAME}/bin/Release/${JOB_NAME}.exe")
-                }
+                testOpsec("${JOB_NAME}/bin/Release/${JOB_NAME}.exe")
+            }
+        }
+
+        stage('scan') {
+            steps {
+                offlineVirusScan("${JOB_NAME}/bin/Release/${JOB_NAME}.exe")
             }
         }
 
@@ -89,8 +89,8 @@ pipeline {
             steps{
                 script{
                     def uploadPattern = "${JOB_NAME}/bin/Release/*.exe"
-                    def targetRepo = "engagements/${params.ProjectID}/${JOB_NAME}/"
-                    def props = "language=csharp;ext=exe;type=postex;"
+                    def targetRepo = "engagements/${params.projectId}/${JOB_NAME}/"
+                    def props = "language=csharp;ext=exe;stage=postex;type=external"
 
                     deployToRtArtifactory(uploadPattern, targetRepo, props)
                 }

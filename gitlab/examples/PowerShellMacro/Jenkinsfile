@@ -6,6 +6,7 @@ library identifier: 'rt-ci-common@master',
         ]
     )
 
+
 pipeline {
 
     agent {
@@ -35,36 +36,37 @@ pipeline {
     }
 
     triggers {
-        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: "2dabed56c7a17eb1810afc804e0ec151") // TODO don't store here
+        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: "QHeyKgD3lw9qU5wTwp7K6AmA3aFZO0") // TODO don't store here
     }
 
     parameters {
         string name: 'projectId', defaultValue: 'No Project', description: 'projectId associated with the build.', trim: true
+        file description: 'Payload contents', name: 'payload.txt'
     }
 
     stages {
 
-        stage('test') {
+        stage('build') {
             steps {
-                bat "python -m pytest"
+                script {
+                    def payload = readFile "${env.WORKSPACE}/payload.txt"
+                    replaceAll("*.macro", "#REPLACEME#", "${payload}")
+                }
             }
         }
 
-        stage('code quality') {
+        stage('scan') {
             steps {
-                sonarOnDocker()
+                offlineVirusScan("dropper.macro")
             }
         }
 
         stage('deploy') {
             steps{
-                script {
-
-                    zip zipFile: "${JOB_NAME}.zip"
-
-                    def uploadPattern = "${JOB_NAME}.zip"
+                script{
+                    def uploadPattern = "dropper.macro"
                     def targetRepo = "engagements/${params.projectId}/${JOB_NAME}/"
-                    def props = "language=python;ext=zip;stage=c2;type=internal"
+                    def props = "language=vba;ext=macro;type=internal;stage=exploitation"
 
                     deployToRtArtifactory(uploadPattern, targetRepo)
                 }

@@ -5,7 +5,7 @@ credentials:
       - usernamePassword:
           description: "Deploy creds"
           id: "Artifactory"
-          password: "{AQAAABAAAAAgtVvEU011dqCh29M5l2O6Cc933RstFKjS3FrwtqvKqIUbWBzQ2UroWb7dbJ3ut15N}"
+          password: "{AQAAABAAAAAgDRiLpi4a5LlaJGeydg9NjNVFFXb+gvFJvOuM6VMulbamVq0/ncacg4t8jCsN1rcU}"
           scope: GLOBAL
           username: "admin"
       - gitLabApiTokenImpl:
@@ -18,7 +18,7 @@ credentials:
           scope: GLOBAL
       - usernamePassword:
           id: "Gitlab creds"
-          password: "{AQAAABAAAAAgh+aPL5ou8vh/K0ws2jf7/oWnigtwJpNeTUiLr0rNK6TLgV8aQUQhQ4u7sJ5vm+IG}"
+          password: "{AQAAABAAAAAgvkOBfx4BwAbbDBZbYqeOEO/2EuO6uPvAO9HXnNg7cJzZEZix8HdP2pCVIVSeHZCi}"
           scope: GLOBAL
           username: "root"
       - string:
@@ -90,6 +90,49 @@ jenkins:
     - id: "default"
       url: "https://updates.jenkins.io/update-center.json"
   views:
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "builtOnColumn"
+      - "favoriteColumn"
+      jobNames:
+      - "PoshC2"
+      name: "C2Frameworks"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "builtOnColumn"
+      - "favoriteColumn"
+      jobNames:
+      - "PowerShellMacro"
+      name: "Execution"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "builtOnColumn"
+      - "favoriteColumn"
+      jobNames:
+      - "SafetyDump"
+      - "Seatbelt"
+      name: "Modules"
   - all:
       name: "all"
   viewsTabBar: "standard"
@@ -106,7 +149,10 @@ security:
     port: -1
   scriptApproval:
     approvedSignatures:
+    - "new java.io.File java.lang.String"
     - "staticMethod java.lang.System getenv java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachDirRecurse\
+      \ java.io.File groovy.lang.Closure"
 unclassified:
   artifactoryBuilder:
     artifactoryServers:
@@ -198,6 +244,9 @@ unclassified:
     localRepository: "default"
   pollSCM:
     pollingThreadCount: 10
+  slackNotifier:
+    botUser: false
+    sendAsText: false
   sonarGlobalConfiguration:
     buildWrapperEnabled: true
     installations:
