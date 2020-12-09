@@ -42,6 +42,7 @@ pipeline {
     }
 
     parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
         string name: 'projectId', defaultValue: 'No Project', description: 'Project ID associated with the build.', trim: true
     }
 
