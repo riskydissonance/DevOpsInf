@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: sonar
+  name: sonar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sonar
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: sonar
+    spec:
+      containers:
+      - env:
+        - name: SONAR_JDBC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secrets
+              key: SONAR_JDBC_PASSWORD
+        - name: SONAR_JDBC_URL
+          value: jdbc:postgresql://db:5432/sonar
+        - name: SONAR_JDBC_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secrets
+              key: SONAR_JDBC_USERNAME
+        image: sonarqube:latest
+        imagePullPolicy: ""
+        name: sonar
+        ports:
+        - containerPort: 9000
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/sonarqube/data
+          name: sonarqube-data
+        - mountPath: /opt/sonarqube/extensions
+          name: sonarqube-extensions
+        - mountPath: /opt/sonarqube/logs
+          name: sonarqube-logs
+        - mountPath: /opt/sonarqube/temp
+          name: sonarqube-temp
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: sonarqube-data
+        persistentVolumeClaim:
+          claimName: sonarqube-data
+      - name: sonarqube-extensions
+        persistentVolumeClaim:
+          claimName: sonarqube-extensions
+      - name: sonarqube-logs
+        persistentVolumeClaim:
+          claimName: sonarqube-logs
+      - name: sonarqube-temp
+        persistentVolumeClaim:
+          claimName: sonarqube-temp

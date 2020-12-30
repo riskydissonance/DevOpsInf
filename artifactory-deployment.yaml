@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: artifactory
+  name: artifactory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: artifactory
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: artifactory
+    spec:
+      containers:
+      - image: artifactory
+        imagePullPolicy: "Never"
+        name: artifactory
+        ports:
+        - containerPort: 8081
+        - containerPort: 8082
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/opt/jfrog/artifactory
+          name: artifactory-data
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: artifactory-data
+        persistentVolumeClaim:
+          claimName: artifactory-data

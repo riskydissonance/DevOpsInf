@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: jenkins
+  name: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: jenkins
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: jenkins
+    spec:
+      containers:
+      - env:
+        - name: CASC_JENKINS_CONFIG
+          value: https://raw.githubusercontent.com/m0rv4i/DevOpsInf/master/jenkins/config/jenkins.yml
+        - name: SLACK_DOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: secrets
+              key: SLACK_DOMAIN
+        - name: SLACK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secrets
+              key: SLACK_TOKEN
+        - name: SONAR_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secrets
+              key: SONAR_TOKEN
+        image: jenkins
+        imagePullPolicy: "Never"
+        name: jenkins
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/jenkins_home
+          name: jenkins-data
+        - mountPath: /certs/client
+          name: jenkins-certs
+          readOnly: true
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: jenkins-data
+        persistentVolumeClaim:
+          claimName: jenkins-data
+      - name: jenkins-certs
+        persistentVolumeClaim:
+          claimName: jenkins-certs
+          readOnly: true
