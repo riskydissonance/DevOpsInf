@@ -23,6 +23,21 @@ spec:
         - containerPort: 80
         - containerPort: 443
         resources: {}
+        volumeMounts:
+        - mountPath: /etc/nginx
+          name: nginx-config
+          readOnly: true
+        - mountPath: /etc/cert
+          name: nginx-certs
+          readOnly: true
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
+      volumes:
+      - name: nginx-config
+        persistentVolumeClaim:
+          claimName: nginx-config
+          readOnly: true
+      - name: nginx-certs
+        persistentVolumeClaim:
+          claimName: nginx-certs
+          readOnly: true

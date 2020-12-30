@@ -6,7 +6,7 @@ metadata:
   name: jenkins-certs
 spec:
   accessModes:
-  - ReadOnlyMany
+  - ReadWriteMany
   resources:
     requests:
       storage: 100Mi

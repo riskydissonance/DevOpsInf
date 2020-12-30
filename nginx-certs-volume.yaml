@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-certs-volume
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: /run/desktop/mnt/host/c/Users/robjb/Documents/git/DevOpsInf/nginx/cert
+    type: Directory
+  claimRef:
+     namespace: default
+     name: nginx-certs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-certs
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
