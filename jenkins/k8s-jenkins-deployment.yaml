@@ -35,7 +35,7 @@ spec:
             secretKeyRef:
               name: secrets
               key: SONAR_TOKEN
-        image: jenkins
+        image: jenkins:latest
         imagePullPolicy: "Never"
         name: jenkins
         ports:

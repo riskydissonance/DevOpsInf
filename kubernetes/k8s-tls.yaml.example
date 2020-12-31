@@ -4,6 +4,6 @@ metadata:
   name: tls
   namespace: default
 data:
-  tls.crt: base64 cert
-  tls.key: base64 key
+  tls.crt: <base64 cert>
+  tls.key: <base64 key>
 type: kubernetes.io/tls

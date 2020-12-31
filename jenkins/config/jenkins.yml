@@ -5,26 +5,26 @@ credentials:
       - usernamePassword:
           description: "Deploy creds"
           id: "Artifactory"
-          password: "{AQAAABAAAAAgDRiLpi4a5LlaJGeydg9NjNVFFXb+gvFJvOuM6VMulbamVq0/ncacg4t8jCsN1rcU}"
+          password: "{AQAAABAAAABQH763jmv73IKtFc0+PzYyn+Sz5wF7LNBssmEoth14Hr2Hpa//doO8qWuHp9HQnRNdafagAfTC2wsR/2Rxe2QXEidNp9AjciE7W13lg8ynUFa7O/ggC2/HzmH8QJ0NYOSI}"
           scope: GLOBAL
           username: "admin"
       - gitLabApiTokenImpl:
-          apiToken: "{AQAAABAAAAAgjf6tQQDsHtDI7rJyPiG8w6Bu0Roo04L6hj/UEYnsa0fnXPrkK7r1lewyz9EKUvGE}"
+          apiToken: "{AQAAABAAAABQrz48lggPWQG6S39Q0L+xzU/PQ0gs5VdfvWSSADKP2R3ngiB7wrrR6YX+SpNloQEi3zUKreCAAtjdSUhRpT741lsjzPtPA89Jjr7OqHLpOIZ2MXr3RhywFd80K5Hurwub}"
           id: "GitLab"
           scope: GLOBAL
       - gitLabApiTokenImpl:
-          apiToken: "{AQAAABAAAAAgbHF5oWqqnNce7Qw6YtbNCbYI0o7MpV7/Hcb8JComwr90uFMB+kE/MXCG7m89cPtc}"
+          apiToken: "{AQAAABAAAABQdCLA6KG93gwTdozWZzoq4F30/eGawzXjOTPG9S6dwK9jnFMeeoBzCj9G/mva2KfVb73eaeXIiW33q1SfQ5bWnNdnlO+q/lgq7dcw1pv2fe0zJRGd6z0GFxZf8zqr3HjG}"
           id: "Gitlab2"
           scope: GLOBAL
       - usernamePassword:
           id: "Gitlab creds"
-          password: "{AQAAABAAAAAgvkOBfx4BwAbbDBZbYqeOEO/2EuO6uPvAO9HXnNg7cJzZEZix8HdP2pCVIVSeHZCi}"
+          password: "{AQAAABAAAABQe70N+7FsoYA2gZfYvy4rOFvuFiJPIyrVP3cI+oVYL6954i/FohDq8UfVU78lf3Aa1NOtInGsxHz1hVgtFY7hsvZ9TANGhpGDgaGJKxnahC4+4SEWdLj0GvzyEqX6HdUN}"
           scope: GLOBAL
           username: "root"
       - string:
           id: "Sonar"
           scope: GLOBAL
-          secret: "{AQAAABAAAAAwCAU53XC4f2iAxaB4/qHPzONKFxGnjUwJKQ/VJLh51w0LMrXuHzgs4Tzvq6xw1ZUeKsY6a+q4Xas1qlS74rlptw==}"
+          secret: "{AQAAABAAAABw+uqWkbL/QQaPn9Jdah4i53jsXx+goftzdCo9xtOpkICcEzUWORM26ZG58oxRzgsyeFBkNDBvwFnjN3xLLjO5XrzYMXcJ5vkIQvwhjkvNoqkDfpdhDmnBm+46eYtP768XAnw7RT8Nsoo0BzkWyGuyZZ0LUCrSXxuqbhcElMBPHnU=}"
 jenkins:
   agentProtocols:
   - "JNLP4-connect"
@@ -74,6 +74,8 @@ jenkins:
       - id: "admin"
         name: "admin"
         properties:
+        - "theme"
+        - "myView"
         - "slack"
         - "apiToken"
         - favoriting:
@@ -156,12 +158,13 @@ security:
 unclassified:
   artifactoryBuilder:
     artifactoryServers:
-    - artifactoryUrl: "http://artifactory:8081/artifactory"
+    - artifactoryUrl: "http://artifactory.default.svc.cluster.local:8081/artifactory"
       bypassProxy: false
       connectionRetry: 3
       deployerCredentialsConfig:
         credentialsId: "Artifactory"
         overridingCredentials: false
+        password: "{AQAAABAAAAAQty3sDbNO1fDUpAKf44mUlmray9rthyTuiLW0wEmvOKw=}"
         username: "****"
       deploymentThreads: 3
       serverId: "ARTIFACTORY"
@@ -172,6 +175,7 @@ unclassified:
       credentialsConfig:
         ignoreCredentialPluginDisabled: true
         overridingCredentials: false
+        password: "{AQAAABAAAAAQ0GzH4tQPmLat9q1wqLvn3vupSUc6tKmM5clL1PS/2YU=}"
         username: "****"
       timeout: 300
     useCredentialsPlugin: true
@@ -201,7 +205,7 @@ unclassified:
     defaultTriggerIds:
     - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
     mailAccount:
-      smtpPassword: "{AQAAABAAAAAQofdzxLdMh+jLPyNkgVTSse2a2TFk/6eQjvdBBNOKHag=}"
+      smtpPassword: "{AQAAABAAAABAE0XJIBSkQKFtAdRI/mPjvsOuUOIZPQHOexHrD72B9+626+uCriCQNM4xMDMz0bYzPOwiXq26DVmeyT8yUwTiPmqq+H9BcKHOXePsuBLO8yI=}"
     maxAttachmentSize: -1
     maxAttachmentSizeMb: -1
     precedenceBulk: false
@@ -222,7 +226,12 @@ unclassified:
       name: "Gitlab"
       readTimeout: 10
       url: "https://gitlab.jmpesp.local"
+    - clientBuilderId: "autodetect"
+      connectionTimeout: 10
+      ignoreCertificateErrors: false
+      readTimeout: 10
   gitSCM:
+    addGitTagAction: false
     allowSecondFetch: false
     createAccountBasedOnEmail: false
     disableGitToolChooser: false
@@ -256,6 +265,9 @@ unclassified:
       triggers:
         skipScmCause: false
         skipUpstreamCause: false
+  themeManager:
+    disableUserThemes: false
+    theme: "material-indigo"
   timestamper:
     allPipelines: false
     elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
