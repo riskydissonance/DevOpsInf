@@ -31,6 +31,8 @@ spec:
         image: postgres:latest
         imagePullPolicy: ""
         name: db
+        ports:
+        - containerPort: 5432
         resources: {}
         volumeMounts:
         - mountPath: /var/lib/postgresql
