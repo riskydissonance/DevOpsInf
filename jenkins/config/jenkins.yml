@@ -5,26 +5,22 @@ credentials:
       - usernamePassword:
           description: "Deploy creds"
           id: "Artifactory"
-          password: "{AQAAABAAAABQH763jmv73IKtFc0+PzYyn+Sz5wF7LNBssmEoth14Hr2Hpa//doO8qWuHp9HQnRNdafagAfTC2wsR/2Rxe2QXEidNp9AjciE7W13lg8ynUFa7O/ggC2/HzmH8QJ0NYOSI}"
+          password: "{AQAAABAAAAAgQswffp1As/huWIt40HnT88svnh3SvgmOKo5f+uCUfnW5AAhCTyy+YkiqVqyxiNya}"
           scope: GLOBAL
           username: "admin"
       - gitLabApiTokenImpl:
-          apiToken: "{AQAAABAAAABQrz48lggPWQG6S39Q0L+xzU/PQ0gs5VdfvWSSADKP2R3ngiB7wrrR6YX+SpNloQEi3zUKreCAAtjdSUhRpT741lsjzPtPA89Jjr7OqHLpOIZ2MXr3RhywFd80K5Hurwub}"
+          apiToken: "{AQAAABAAAAAgOnW7FGweaes8U69VlBr2wMvSHhS52+sylEeITzODMY/EZCuM6RCDx0nz7wWxG5RD}"
           id: "GitLab"
-          scope: GLOBAL
-      - gitLabApiTokenImpl:
-          apiToken: "{AQAAABAAAABQdCLA6KG93gwTdozWZzoq4F30/eGawzXjOTPG9S6dwK9jnFMeeoBzCj9G/mva2KfVb73eaeXIiW33q1SfQ5bWnNdnlO+q/lgq7dcw1pv2fe0zJRGd6z0GFxZf8zqr3HjG}"
-          id: "Gitlab2"
           scope: GLOBAL
       - usernamePassword:
           id: "Gitlab creds"
-          password: "{AQAAABAAAABQe70N+7FsoYA2gZfYvy4rOFvuFiJPIyrVP3cI+oVYL6954i/FohDq8UfVU78lf3Aa1NOtInGsxHz1hVgtFY7hsvZ9TANGhpGDgaGJKxnahC4+4SEWdLj0GvzyEqX6HdUN}"
+          password: "{AQAAABAAAAAglUY/kd01cmQw2cprA6U1BPzar38S9xJB8Tvs6642AkPLEujXwT1y4VCJQyKdO7va}"
           scope: GLOBAL
           username: "root"
       - string:
           id: "Sonar"
           scope: GLOBAL
-          secret: "{AQAAABAAAABw+uqWkbL/QQaPn9Jdah4i53jsXx+goftzdCo9xtOpkICcEzUWORM26ZG58oxRzgsyeFBkNDBvwFnjN3xLLjO5XrzYMXcJ5vkIQvwhjkvNoqkDfpdhDmnBm+46eYtP768XAnw7RT8Nsoo0BzkWyGuyZZ0LUCrSXxuqbhcElMBPHnU=}"
+          secret: "{AQAAABAAAAAw1TPFFGAQ4zH8PfQMQ+/EJKB4MrSdR7/z05bGyI9+r1JRhKPHeQ8JtqCMTumUJdC46Q6xiUSKlr1vyOcQps17bQ==}"
 jenkins:
   agentProtocols:
   - "JNLP4-connect"
@@ -49,6 +45,7 @@ jenkins:
       labelString: "Windows"
       launcher:
         jnlp:
+          webSocket: true
           workDirSettings:
             disabled: false
             failIfWorkDirIsMissing: false
@@ -74,6 +71,7 @@ jenkins:
       - id: "admin"
         name: "admin"
         properties:
+        - "slack"
         - "theme"
         - "apiToken"
         - favoriting:
@@ -156,13 +154,13 @@ security:
 unclassified:
   artifactoryBuilder:
     artifactoryServers:
-    - artifactoryUrl: "http://artifactory.default.svc.cluster.local:8081/artifactory"
+    - artifactoryUrl: "https://artifactory.jmpesp.local/artifactory"
       bypassProxy: false
       connectionRetry: 3
       deployerCredentialsConfig:
         credentialsId: "Artifactory"
         overridingCredentials: false
-        password: "{AQAAABAAAAAQty3sDbNO1fDUpAKf44mUlmray9rthyTuiLW0wEmvOKw=}"
+        password: "{AQAAABAAAAAQNrDBLwY8wTnTZ12qYscAXDiwuL39gO2Si/OBXzpzlfY=}"
         username: "****"
       deploymentThreads: 3
       serverId: "ARTIFACTORY"
@@ -173,7 +171,7 @@ unclassified:
       credentialsConfig:
         ignoreCredentialPluginDisabled: true
         overridingCredentials: false
-        password: "{AQAAABAAAAAQ0GzH4tQPmLat9q1wqLvn3vupSUc6tKmM5clL1PS/2YU=}"
+        password: "{AQAAABAAAAAQl5hH8Q3EAQq45JO+tWaDGMGY8l0tF1z/M/ZhpXN+3CU=}"
         username: "****"
       timeout: 300
     useCredentialsPlugin: true
@@ -203,7 +201,7 @@ unclassified:
     defaultTriggerIds:
     - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
     mailAccount:
-      smtpPassword: "{AQAAABAAAABAE0XJIBSkQKFtAdRI/mPjvsOuUOIZPQHOexHrD72B9+626+uCriCQNM4xMDMz0bYzPOwiXq26DVmeyT8yUwTiPmqq+H9BcKHOXePsuBLO8yI=}"
+      smtpPassword: "{AQAAABAAAACAWhkeGSgP+ZZZ5ncjtQO0bsBzqQIByhQ9OwcNjbmkxyfgxeNekVCJVtJnls0xeukJM1SghZv9IqKw9mvIgM3TB7guyeM8A7jIxO6Rmd/QJkUIuyvjRiT25x+FfcKKhFhvfpkdLMPcnh8EkLh7fiAuZsqT7b1iMslf4hD9ff9Q0sCvHItUkacVwOymooe7O6Yk}"
     maxAttachmentSize: -1
     maxAttachmentSizeMb: -1
     precedenceBulk: false
@@ -224,6 +222,10 @@ unclassified:
       name: "Gitlab"
       readTimeout: 10
       url: "https://gitlab.jmpesp.local"
+    - clientBuilderId: "autodetect"
+      connectionTimeout: 10
+      ignoreCertificateErrors: false
+      readTimeout: 10
     - clientBuilderId: "autodetect"
       connectionTimeout: 10
       ignoreCertificateErrors: false
@@ -259,7 +261,7 @@ unclassified:
     installations:
     - credentialsId: "Sonar"
       name: "Sonarqube"
-      serverUrl: "http://sonar.jmpesp.local"
+      serverUrl: "https://sonar.jmpesp.local"
       triggers:
         skipScmCause: false
         skipUpstreamCause: false
@@ -280,7 +282,7 @@ tool:
     settingsProvider: "standard"
   msBuildSQRunnerInstallation:
     installations:
-    - home: "C:\\tools\\sonar-scanner-msbuild-5.0.4.24009-net46\\"
+    - home: "C:\\tools\\sonar-scanner-msbuild\\"
       name: "SonarScannerMSBuild"
   msbuild:
     installations:

@@ -9,10 +9,19 @@ RUN add-apt-repository \
        "deb [arch=amd64] https://download.docker.com/linux/debian \
        $(lsb_release -cs) stable"
 RUN apt-get update && apt-get install -y docker-ce-cli
-USER jenkins
 RUN git config --global http.sslVerify false
+COPY gitlab.crt $JAVA_HOME/jre/lib/security
+RUN cd $JAVA_HOME/jre/lib/security \
+    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias gitlabcert -file gitlab.crt
+COPY artifactory.crt $JAVA_HOME/jre/lib/security
+RUN cd $JAVA_HOME/jre/lib/security \
+    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias artifactorycert -file artifactory.crt
+COPY sonar.crt $JAVA_HOME/jre/lib/security
+RUN cd $JAVA_HOME/jre/lib/security \
+    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias sonarcert -file sonar.crt
+USER jenkins
 RUN jenkins-plugin-cli --plugins blueocean:latest configuration-as-code:latest \
        msbuild:latest gitlab-plugin:latest material-theme:latest sonar:latest \
        slack:latest artifactory:latest pipeline-model-definition \
        built-on-column:latest envinject:latest email-ext:latest timestamper:latest \
-       build-timeout:latest git-parameter:latest
+       build-timeout:latest git-parameter:latest ws-cleanup:latest

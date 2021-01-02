@@ -4,3 +4,4 @@ projects/
 .env
 kubernetes/k8s-secrets.yaml
 kubernetes/ingress/k8s-*-tls.yaml
+jenkins/*.crt

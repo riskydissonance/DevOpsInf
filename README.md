@@ -50,9 +50,23 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout artifactory.key -out
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sonar.key -out sonar.crt  -subj "/CN=sonar.jmpesp.local"
 ```
 
+The below will base64 all the files in the current dir and their names for easy creation of the tls yaml files.
+```
+find . -type f -exec echo {} \; -exec base64 -w 0 {}  \; -exec echo \;
+```
+
 https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04#:~:text=%20How%20To%20Create%20a%20Self-Signed%20SSL%20Certificate,made%20our%20changes%20and%20adjusted%20our...%20More%20
 
 Base64 these and add them to the `k8s-*-tls.yaml` files.
+
+Add them to the Host **Trusted Root CA** (double click the crt on Windows) and to the Java Keystore:
+
+```
+& "C:\Program Files\Java\jre1.8.0_271\bin\keytool.exe" -import -file sonar.crt -keystore "C:\Program Files\Java\jre1.8.0_271\lib\security\cacerts" -alias sonar-ingress -storepass changeit -noprompt
+```
+
+NOTE BEST TO USE JAVA 8 AS JAVA 11+ FUCKS STUFF UP.
+* https://issues.jenkins.io/browse/JENKINS-61212
 
 Note:
 * Jenkins Dockerfile is set to turn off SSL verify for git
@@ -77,9 +91,9 @@ E.g. For local access, in `/etc/hosts` set the hostnames to your host's Docker/W
 
 * Jenkins docker image has ssl verify off as SSL is self signed (in Dockerfile)
 
-##### Windows slave
+##### Windows agent
 
-For a Windows slave all you need to do is set it up in Jenkins, download the jnlp file and ensure docker (for Sonar) & visual studio (for MSBuild) is installed on the windows host.
+For a Windows agent all you need to do is set it up in Jenkins, download the jnlp file and ensure docker (for Sonar) & visual studio (for MSBuild) is installed on the windows host.
 
 ##### Webhooks for Git pushing
 
