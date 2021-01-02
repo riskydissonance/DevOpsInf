@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: reverse-proxy
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:
@@ -11,6 +11,7 @@ spec:
       - artifactory.jmpesp.local
       - gitlab.jmpesp.local
       - sonar.jmpesp.local
+      - proxy.jmpesp.local
   rules:
   - host: jenkins.jmpesp.local
     http:
@@ -52,3 +53,13 @@ spec:
             name: sonar
             port:
               number: 9000
+  - host: proxy.jmpesp.local
+    http:
+      paths:
+      - path: /status
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-ingress
+            port:
+              number: 18080
