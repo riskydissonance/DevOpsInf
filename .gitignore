@@ -3,4 +3,4 @@ gitlab/config
 projects/
 .env
 kubernetes/k8s-secrets.yaml
-kubernetes/k8s-tls.yaml
+kubernetes/ingress/k8s-*-tls.yaml

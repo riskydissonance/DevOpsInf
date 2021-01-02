@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: artifactory-tls
+  namespace: default
+data:
+  tls.crt: <base64 cert>
+  tls.key: <base64 key>
+type: kubernetes.io/tls

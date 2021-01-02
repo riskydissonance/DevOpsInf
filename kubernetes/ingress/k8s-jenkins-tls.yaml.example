@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: tls
+  name: jenkins-tls
   namespace: default
 data:
   tls.crt: <base64 cert>

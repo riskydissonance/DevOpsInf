@@ -41,15 +41,18 @@ Before anyone tries anything these are all unique to this particular infrastruct
 * Locally we're setting up infrastructure that doesn't have DNS entries nor a valid certificate, so there are a few hacks:
 #### Ingress Reverse Proxy
 
-##### Setting up a Self-signed cert
+##### Setting up the Self-signed certs
 
 ```
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./nginx/cert/cert.key -out ./nginx/cert/cert.crt
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout gitlab.key -out gitlab.crt  -subj "/CN=gitlab.jmpesp.local"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout jenkins.key -out jenkins.crt  -subj "/CN=jenkins.jmpesp.local"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout artifactory.key -out artifactory.crt  -subj "/CN=artifactory.jmpesp.local"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sonar.key -out sonar.crt  -subj "/CN=sonar.jmpesp.local"
 ```
 
 https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04#:~:text=%20How%20To%20Create%20a%20Self-Signed%20SSL%20Certificate,made%20our%20changes%20and%20adjusted%20our...%20More%20
 
-Base64 these and add it to the `k8s-tls.yaml`.
+Base64 these and add them to the `k8s-*-tls.yaml` files.
 
 Note:
 * Jenkins Dockerfile is set to turn off SSL verify for git

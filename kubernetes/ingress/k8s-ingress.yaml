@@ -7,11 +7,17 @@ metadata:
 spec:
   tls:
   - hosts:
-      - jenkins.jmpesp.local
-      - artifactory.jmpesp.local
-      - gitlab.jmpesp.local
-      - sonar.jmpesp.local
-      - proxy.jmpesp.local
+    - jenkins.jmpesp.local
+    secretName: jenkins-tls
+  - hosts:
+    - artifactory.jmpesp.local
+    secretName: artifactory-tls
+  - hosts:
+    - sonar.jmpesp.local
+    secretName: sonar-tls
+  - hosts:
+    - gitlab.jmpesp.local
+    secretName: gitlab-tls
   rules:
   - host: jenkins.jmpesp.local
     http:
