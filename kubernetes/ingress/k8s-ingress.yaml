@@ -53,13 +53,3 @@ spec:
             name: sonar
             port:
               number: 9000
-  - host: proxy.jmpesp.local
-    http:
-      paths:
-      - path: /status
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-ingress
-            port:
-              number: 18080

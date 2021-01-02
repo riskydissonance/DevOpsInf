@@ -4,4 +4,4 @@ metadata:
   name: tcp-services
   namespace: kube-system
 data:
-  2222: "default/gitlab:22"
+  22: "default/gitlab:22"
