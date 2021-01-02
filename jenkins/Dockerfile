@@ -15,4 +15,4 @@ RUN jenkins-plugin-cli --plugins blueocean:latest configuration-as-code:latest \
        msbuild:latest gitlab-plugin:latest material-theme:latest sonar:latest \
        slack:latest artifactory:latest pipeline-model-definition \
        built-on-column:latest envinject:latest email-ext:latest timestamper:latest \
-       build-timeout:latest
+       build-timeout:latest git-parameter:latest

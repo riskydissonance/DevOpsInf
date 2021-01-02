@@ -15,7 +15,7 @@ spec:
       port: 443
       protocol: TCP
       targetPort: webhook
-    - name: proxied-tcp-22
+    - name: proxied-tcp-22-gitlab
       port: 22
       targetPort: 22
       nodePort: 30000 # Only helps with Minikube as LoadBalancer gets a NodePort so specify a static port
