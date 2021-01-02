@@ -9,14 +9,10 @@ RUN add-apt-repository \
        "deb [arch=amd64] https://download.docker.com/linux/debian \
        $(lsb_release -cs) stable"
 RUN apt-get update && apt-get install -y docker-ce-cli
-COPY gitlab.crt $JAVA_HOME/jre/lib/security
+COPY *.crt $JAVA_HOME/jre/lib/security
 RUN cd $JAVA_HOME/jre/lib/security \
-    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias gitlabcert -file gitlab.crt
-COPY artifactory.crt $JAVA_HOME/jre/lib/security
-RUN cd $JAVA_HOME/jre/lib/security \
-    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias artifactorycert -file artifactory.crt
-COPY sonar.crt $JAVA_HOME/jre/lib/security
-RUN cd $JAVA_HOME/jre/lib/security \
+    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias gitlabcert -file gitlab.crt \
+    && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias artifactorycert -file artifactory.crt \
     && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias sonarcert -file sonar.crt
 COPY *.crt /usr/local/share/ca-certificates/
 RUN update-ca-certificates

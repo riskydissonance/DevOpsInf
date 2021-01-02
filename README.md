@@ -47,8 +47,9 @@ Before anyone tries anything these are all unique to this particular infrastruct
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout gitlab.key -out gitlab.crt  -subj "/CN=gitlab.jmpesp.local"
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout jenkins.key -out jenkins.crt  -subj "/CN=jenkins.jmpesp.local"
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout artifactory.key -out artifactory.crt  -subj "/CN=artifactory.jmpesp.local"
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sonar.key -out sonar.crt  -subj "/CN=sonar.jmpesp.local"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sonar.key -addext "subjectAltName = DNS:sonar.jmpesp.local" -out sonar.crt  -subj "/CN=sonar.jmpesp.local"
 ```
+NOTE: Sonar SSL checks fail if the DNS name isn't also an Alt name hence the different command above.
 
 The below will base64 all the files in the current dir and their names for easy creation of the tls yaml files.
 ```
