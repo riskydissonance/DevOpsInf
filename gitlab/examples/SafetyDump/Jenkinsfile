@@ -47,7 +47,7 @@ pipeline {
 
         stage('code quality') {
             steps {
-                runMsbuildWithSonar()
+                runMsbuildWithSonar(targetFrameworkVersion = "4.5.1")
             }
         }
 
@@ -61,7 +61,7 @@ pipeline {
 
         stage('build') {
             steps {
-                runMsbuild()
+                runMsbuild(targetFrameworkVersion = "4.5.1")
             }
         }
 
