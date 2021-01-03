@@ -9,7 +9,7 @@ RUN add-apt-repository \
        "deb [arch=amd64] https://download.docker.com/linux/debian \
        $(lsb_release -cs) stable"
 RUN apt-get update && apt-get install -y docker-ce-cli
-COPY *.crt $JAVA_HOME/jre/lib/security
+COPY *.crt $JAVA_HOME/jre/lib/security/
 RUN cd $JAVA_HOME/jre/lib/security \
     && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias gitlabcert -file gitlab.crt \
     && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias artifactorycert -file artifactory.crt \
