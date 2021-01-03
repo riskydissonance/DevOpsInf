@@ -26,7 +26,7 @@ Before anyone tries anything these are all unique to this particular infrastruct
 * Config-as-code is a WIP
     * Working for Jenkins
         * https://www.jenkins.io/projects/jcasc
-    * WIP for Artifactory
+    * Working for Artifactory
         * https://www.jfrog.com/confluence/display/JFROG/Artifactory+Configuration+Descriptors
     * TODO for Sonar
     * TODO for Gitlab
