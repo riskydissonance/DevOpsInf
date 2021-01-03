@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<config xmlns="http://artifactory.jfrog.org/xsd/3.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.jfrog.org/xsd/artifactory-v3_1_2.xsd">
+<config xmlns="http://artifactory.jfrog.org/xsd/3.1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.jfrog.org/xsd/artifactory-v3_1_4.xsd">
     <offlineMode>false</offlineMode>
     <helpLinksEnabled>true</helpLinksEnabled>
     <fileUploadMaxSizeMb>100</fileUploadMaxSizeMb>
-    <revision>4</revision>
+    <revision>3</revision>
     <dateFormat>dd-MM-yy HH:mm:ss z</dateFormat>
     <addons>
         <showAddonsInfo>true</showAddonsInfo>
-        <showAddonsInfoCookie>1607092656496</showAddonsInfoCookie>
+        <showAddonsInfoCookie>1609677661736</showAddonsInfoCookie>
     </addons>
     <security>
         <anonAccessEnabled>false</anonAccessEnabled>
@@ -27,12 +27,6 @@
         </passwordSettings>
         <ldapSettings/>
         <ldapGroupSettings/>
-        <oauthSettings>
-            <enableIntegration>false</enableIntegration>
-            <allowUserToAccessProfile>false</allowUserToAccessProfile>
-            <persistUsers>false</persistUsers>
-            <oauthProvidersSettings/>
-        </oauthSettings>
         <userLockPolicy>
             <enabled>false</enabled>
             <loginAttempts>5</loginAttempts>
@@ -40,6 +34,7 @@
         <accessClientSettings/>
         <buildGlobalBasicReadAllowed>false</buildGlobalBasicReadAllowed>
         <buildGlobalBasicReadForAnonymous>false</buildGlobalBasicReadForAnonymous>
+        <basicAuthEnabled>true</basicAuthEnabled>
     </security>
     <backups>
         <backup>
@@ -93,6 +88,7 @@
             <yumRootDepth>0</yumRootDepth>
             <debianTrivialLayout>false</debianTrivialLayout>
             <enableFileListsIndexing>false</enableFileListsIndexing>
+            <dockerTagRetention>1</dockerTagRetention>
         </localRepository>
         <localRepository>
             <key>engagements</key>
@@ -118,6 +114,7 @@
             <yumRootDepth>0</yumRootDepth>
             <debianTrivialLayout>false</debianTrivialLayout>
             <enableFileListsIndexing>false</enableFileListsIndexing>
+            <dockerTagRetention>1</dockerTagRetention>
         </localRepository>
     </localRepositories>
     <remoteRepositories/>
