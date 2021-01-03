@@ -135,10 +135,6 @@ security:
     creationOfLegacyTokenEnabled: false
     tokenGenerationOnCreationEnabled: false
     usageStatisticsEnabled: true
-  envInject:
-    enableLoadingFromMaster: false
-    enablePermissions: false
-    hideInjectedVars: false
   sSHD:
     port: -1
   scriptApproval:
