@@ -33,12 +33,10 @@ pipeline {
         timestamps()
 
         buildDiscarder(logRotator(numToKeepStr: '5'))
-
-        gitLabConnection('Gitlab')
     }
 
     triggers {
-        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: "fdcb93bd3b1c05c33b0ca196850d784c") // TODO don't store here
+        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: "fdcb93bd3b1c05c33b0ca196850d784c")
     }
 
     parameters {
@@ -56,7 +54,7 @@ pipeline {
 
         stage('prep') {
             steps {
-                replaceAll("*.cs", "Mimikatz", "PROJECT")
+                //replaceAll("*.cs", "Mimikatz", "PROJECT")
 
                 replaceSymbols()
             }
