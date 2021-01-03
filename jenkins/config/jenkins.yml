@@ -148,60 +148,11 @@ security:
     - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachDirRecurse\
       \ java.io.File groovy.lang.Closure"
 unclassified:
-  artifactoryBuilder:
-    artifactoryServers:
-    - artifactoryUrl: "https://artifactory.jmpesp.local/artifactory"
-      bypassProxy: false
-      connectionRetry: 3
-      deployerCredentialsConfig:
-        credentialsId: "Artifactory"
-        overridingCredentials: false
-        password: "{AQAAABAAAAAQNrDBLwY8wTnTZ12qYscAXDiwuL39gO2Si/OBXzpzlfY=}"
-        username: "****"
-      deploymentThreads: 3
-      serverId: "ARTIFACTORY"
-      timeout: 300
-    jfrogPipelinesServer:
-      bypassProxy: false
-      connectionRetries: 3
-      credentialsConfig:
-        ignoreCredentialPluginDisabled: true
-        overridingCredentials: false
-        password: "{AQAAABAAAAAQl5hH8Q3EAQq45JO+tWaDGMGY8l0tF1z/M/ZhpXN+3CU=}"
-        username: "****"
-      timeout: 300
-    useCredentialsPlugin: true
-  bitbucketEndpointConfiguration:
-    endpoints:
-    - bitbucketCloudEndpoint:
-        enableCache: false
-        manageHooks: false
-        repositoriesCacheDuration: 0
-        teamCacheDuration: 0
   buildDiscarders:
     configuredBuildDiscarders:
     - "jobBuildDiscarder"
   buildStepOperation:
     enabled: false
-  email-ext:
-    adminRequiredForTemplateTesting: false
-    allowUnregisteredEnabled: false
-    charset: "UTF-8"
-    debugMode: false
-    defaultBody: |-
-      $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
-
-      Check console output at $BUILD_URL to view the results.
-    defaultContentType: "text/plain"
-    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
-    defaultTriggerIds:
-    - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
-    mailAccount:
-      smtpPassword: "{AQAAABAAAACAWhkeGSgP+ZZZ5ncjtQO0bsBzqQIByhQ9OwcNjbmkxyfgxeNekVCJVtJnls0xeukJM1SghZv9IqKw9mvIgM3TB7guyeM8A7jIxO6Rmd/QJkUIuyvjRiT25x+FfcKKhFhvfpkdLMPcnh8EkLh7fiAuZsqT7b1iMslf4hD9ff9Q0sCvHItUkacVwOymooe7O6Yk}"
-    maxAttachmentSize: -1
-    maxAttachmentSizeMb: -1
-    precedenceBulk: false
-    watchingEnabled: false
   fingerprints:
     fingerprintCleanupDisabled: false
     storage: "file"
