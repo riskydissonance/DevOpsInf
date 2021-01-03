@@ -28,14 +28,14 @@ spec:
           valueFrom:
             secretKeyRef:
               name: secrets
-              key: SONAR_JDBC_PASSWORD
+              key: POSTGRES_PASSWORD
         - name: SONAR_JDBC_URL
           value: jdbc:postgresql://db.default.svc.cluster.local:5432/sonar
         - name: SONAR_JDBC_USERNAME
           valueFrom:
             secretKeyRef:
               name: secrets
-              key: SONAR_JDBC_USERNAME
+              key: POSTGRES_USER
         image: sonarqube:latest
         imagePullPolicy: ""
         name: sonar
