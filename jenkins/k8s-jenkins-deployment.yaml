@@ -19,7 +19,7 @@ spec:
       containers:
       - env:
         - name: CASC_JENKINS_CONFIG
-          value: https://raw.githubusercontent.com/m0rv4i/DevOpsInf/kubernetes/jenkins/config/jenkins.yml
+          value: /run/jenkins.yml
         - name: SLACK_DOMAIN
           valueFrom:
             secretKeyRef:
@@ -35,6 +35,8 @@ spec:
             secretKeyRef:
               name: secrets
               key: SONAR_TOKEN
+        - name: SECRETS
+          value: /secrets/jenkins
         image: jenkins:latest
         imagePullPolicy: "Never"
         name: jenkins
@@ -48,6 +50,9 @@ spec:
         - mountPath: /certs/client
           name: jenkins-certs
           readOnly: true
+        - name: secrets
+          mountPath: /secrets/jenkins
+          readOnly: true
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
@@ -58,3 +63,6 @@ spec:
         persistentVolumeClaim:
           claimName: jenkins-certs
           readOnly: true
+      - name: secrets
+        secret:
+          secretName: secrets
