@@ -49,7 +49,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout jenkins.key -out jen
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout artifactory.key -out artifactory.crt  -subj "/CN=artifactory.jmpesp.local"
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sonar.key -addext "subjectAltName = DNS:sonar.jmpesp.local" -out sonar.crt  -subj "/CN=sonar.jmpesp.local"
 ```
-NOTE: Sonar SSL checks fail if the DNS name isn't also an Alt name hence the different command above.
+**NOTE: Sonar SSL checks fail if the DNS name isn't also an Alt name hence the different command above.**
 
 The below will base64 all the files in the current dir and their names for easy creation of the tls yaml files.
 ```
@@ -66,7 +66,7 @@ Add them to the Host **Trusted Root CA** (double click the crt on Windows) and t
 & "C:\Program Files\Java\jre1.8.0_271\bin\keytool.exe" -import -file sonar.crt -keystore "C:\Program Files\Java\jre1.8.0_271\lib\security\cacerts" -alias sonar-ingress -storepass changeit -noprompt
 ```
 
-NOTE BEST TO USE JAVA 8 AS JAVA 11+ FUCKS STUFF UP.
+**NOTE BEST TO USE JAVA 8 AS JAVA 11+ FUCKS STUFF UP.**
 * https://issues.jenkins.io/browse/JENKINS-61212
 
 Note:
@@ -95,6 +95,9 @@ E.g. For local access, in `/etc/hosts` set the hostnames to your host's Docker/W
 ##### Windows agent
 
 For a Windows agent all you need to do is set it up in Jenkins, download the jnlp file and ensure docker (for Sonar) & visual studio (for MSBuild) is installed on the windows host.
+
+On Kubernetes you can use the `websockets` agent to avoid having to expose additional agent ports and route them. This is a checkbox
+in the agent config.
 
 ##### Webhooks for Git pushing
 
