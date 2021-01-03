@@ -10,6 +10,7 @@ Example inf setup using Kubernetes and config-as-code to quickly host and use:
 * Postgres for DB
 
 Just running `kubectl apply -f . --recursive` should start all the above infrastructure and allow them to communicate.
+
 Config-as-code is a WIP.
 ## Creds
 
@@ -25,7 +26,7 @@ Before anyone tries anything these are all unique to this particular infrastruct
 * Config-as-code is a WIP
     * Working for Jenkins
         * https://www.jenkins.io/projects/jcasc
-    * Working for Artifactory
+    * WIP for Artifactory
         * https://www.jfrog.com/confluence/display/JFROG/Artifactory+Configuration+Descriptors
     * TODO for Sonar
     * TODO for Gitlab
@@ -103,7 +104,27 @@ in the agent config.
 
 https://github.com/jenkinsci/gitlab-plugin/issues/375
 
+### Minikube Notes
+
+* Minikube ideally needs `minikube start --cpus 4 --memory 12000`
+    * E.g. `minikube start --cpus 4 --memory 12000 --driver=hyperv --mount-string .:/tmp/devopsinf --mount`
+* Don't forget to enable ingress
+    * `minikube addons enable ingress`
+* Each time you start Minikube you may get a new ingress IP - need to set this in your hosts file
+    * `kubectl get ingress`
+* When building Docker images you need to point to the Minikube docker registry
+    * `& minikube -p minikube docker-env | Invoke-Expression`
+* LoadBalancer type isn't supported and just gets a NodePort - maybe can use MetalLB but it's in beta and a bit flaky
+    * At present we use a fixed NodePort LoadBalancer for Ingress to expose Gitlab SSH on port 30000
+    * SSH URLs and then e.g. `ssh://git@gitlab.jmpesp.local:30000/modules/SafetyDump.git`
+* Can connect to minikube with `minikube ssh`
+* On Windows hosts, can hit an error mounting directoryies:
+    ```
+    X mount failed: mount: /mount-dir: mount(2) system call failed: Connection timed out. : Process exited with status 32
+    ```
+    Check that minikube doesn't have any Windows Firewall inbound rules outright blocking connections. Update the rules for the **Public** profile even on **Private** networks, that's the one the fixes the issue. `¯\_(ツ)_/¯`
+
 ## TODO
 
 * Add config-as-code for all services where possible
-* Play with Windows containers for MSBuild
+* Play with Windows containers for MSBuild on Server 2019
