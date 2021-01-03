@@ -16,7 +16,6 @@ RUN cd $JAVA_HOME/jre/lib/security \
     && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias sonarcert -file sonar.crt
 COPY *.crt /usr/local/share/ca-certificates/
 RUN update-ca-certificates
-COPY config/jenkins.yml /run/
 USER jenkins
 RUN jenkins-plugin-cli --plugins blueocean:latest configuration-as-code:latest \
        msbuild:latest gitlab-plugin:latest material-theme:latest sonar:latest \

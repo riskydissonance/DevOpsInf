@@ -209,23 +209,6 @@ unclassified:
     apiRateLimitChecker: ThrottleForNormalize
   gitHubPluginConfig:
     hookUrl: "https://jenkins.jmpesp.local/github-webhook/"
-  gitLabConnectionConfig:
-    connections:
-    - apiTokenId: "GitLab"
-      clientBuilderId: "autodetect"
-      connectionTimeout: 10
-      ignoreCertificateErrors: true
-      name: "Gitlab"
-      readTimeout: 10
-      url: "https://gitlab.jmpesp.local"
-    - clientBuilderId: "autodetect"
-      connectionTimeout: 10
-      ignoreCertificateErrors: false
-      readTimeout: 10
-    - clientBuilderId: "autodetect"
-      connectionTimeout: 10
-      ignoreCertificateErrors: false
-      readTimeout: 10
   gitSCM:
     addGitTagAction: false
     allowSecondFetch: false
