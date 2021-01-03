@@ -5,22 +5,18 @@ credentials:
       - usernamePassword:
           description: "Deploy creds"
           id: "Artifactory"
-          password: "{AQAAABAAAAAgQswffp1As/huWIt40HnT88svnh3SvgmOKo5f+uCUfnW5AAhCTyy+YkiqVqyxiNya}"
+          password: "${ARTIFACTORY_PASSWORD}"
           scope: GLOBAL
-          username: "admin"
-      - gitLabApiTokenImpl:
-          apiToken: "{AQAAABAAAAAgOnW7FGweaes8U69VlBr2wMvSHhS52+sylEeITzODMY/EZCuM6RCDx0nz7wWxG5RD}"
-          id: "GitLab"
-          scope: GLOBAL
+          username: "${ARTIFACTORY_USERNAME}"
       - usernamePassword:
           id: "Gitlab creds"
-          password: "{AQAAABAAAAAglUY/kd01cmQw2cprA6U1BPzar38S9xJB8Tvs6642AkPLEujXwT1y4VCJQyKdO7va}"
+          password: "${GITLAB_PASSWORD}"
           scope: GLOBAL
-          username: "root"
+          username: "${GITLAB_USERNAME}"
       - string:
           id: "Sonar"
           scope: GLOBAL
-          secret: "{AQAAABAAAAAw1TPFFGAQ4zH8PfQMQ+/EJKB4MrSdR7/z05bGyI9+r1JRhKPHeQ8JtqCMTumUJdC46Q6xiUSKlr1vyOcQps17bQ==}"
+          secret: "${SONAR_TOKEN}"
 jenkins:
   agentProtocols:
   - "JNLP4-connect"
