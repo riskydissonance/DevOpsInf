@@ -144,6 +144,29 @@ security:
     - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachDirRecurse\
       \ java.io.File groovy.lang.Closure"
 unclassified:
+  artifactoryBuilder:
+    artifactoryServers:
+    - artifactoryUrl: "https://artifactory.jmpesp.local/artifactory"
+      bypassProxy: false
+      connectionRetry: 3
+      deployerCredentialsConfig:
+        credentialsId: "Artifactory"
+        overridingCredentials: false
+        password: "{AQAAABAAAAAQNrDBLwY8wTnTZ12qYscAXDiwuL39gO2Si/OBXzpzlfY=}"
+        username: "****"
+      deploymentThreads: 3
+      serverId: "ARTIFACTORY"
+      timeout: 300
+    jfrogPipelinesServer:
+      bypassProxy: false
+      connectionRetries: 3
+      credentialsConfig:
+        ignoreCredentialPluginDisabled: true
+        overridingCredentials: false
+        password: "{AQAAABAAAAAQl5hH8Q3EAQq45JO+tWaDGMGY8l0tF1z/M/ZhpXN+3CU=}"
+        username: "****"
+      timeout: 300
+    useCredentialsPlugin: true
   buildDiscarders:
     configuredBuildDiscarders:
     - "jobBuildDiscarder"
