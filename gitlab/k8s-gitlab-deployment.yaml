@@ -30,6 +30,22 @@ spec:
         - containerPort: 22
         - containerPort: 80
         resources: {}
+        volumeMounts:
+        - mountPath: /var/opt/gitlab
+          name: gitlab-data
+        - mountPath: /etc/gitlab
+          name: gitlab-config
+        - mountPath: /var/log/gitlab
+          name: gitlab-log
       restartPolicy: Always
       serviceAccountName: ""
-      volumes: null
+      volumes:
+      - name: gitlab-data
+        persistentVolumeClaim:
+          claimName: gitlab-data
+      - name: gitlab-config
+        persistentVolumeClaim:
+          claimName: gitlab-config
+      - name: gitlab-log
+        persistentVolumeClaim:
+          claimName: gitlab-logs
